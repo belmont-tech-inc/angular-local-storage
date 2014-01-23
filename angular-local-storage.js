@@ -63,7 +63,7 @@ angularLocalStorage.provider('localStorageService', function(){
     // Checks the browser to see if local storage is supported
     var browserSupportsLocalStorage = (function () {
       try {
-        var supported = ('localStorage' in window && window['localStorage'] !== null);
+        var supported = ('localStorage' in window && window.localStorage !== null);
 
         // When Safari (OS X or iOS) is in private browsing mode, it appears as though localStorage
         // is available, but trying to call .setItem throws an exception.
@@ -194,10 +194,10 @@ angularLocalStorage.provider('localStorageService', function(){
     // Should be used mostly for development purposes
     var clearAllFromLocalStorage = function (regularExpression) {
 
-      var regularExpression = regularExpression || "";
+      regularExpression = regularExpression || "";
       //accounting for the '.' in the prefix when creating a regex
-      var tempPrefix = prefix.slice(0, -1) + "\.";
-      var testRegex = RegExp(tempPrefix + regularExpression);
+      var tempPrefix = prefix.slice(0, -1) + ".";
+      var testRegex = new RegExp(tempPrefix + regularExpression);
 
       if (!browserSupportsLocalStorage) {
         $rootScope.$broadcast('LocalStorageModule.notification.warning', 'LOCAL_STORAGE_NOT_SUPPORTED');
@@ -300,7 +300,7 @@ angularLocalStorage.provider('localStorageService', function(){
       var cookies = document.cookie.split(';');
       for(var i = 0; i < cookies.length; i++) {
         thisCookie = cookies[i];
-        
+
         while (thisCookie.charAt(0) === ' ') {
           thisCookie = thisCookie.substring(1, thisCookie.length);
         }
@@ -326,7 +326,7 @@ angularLocalStorage.provider('localStorageService', function(){
         clearAll: clearAllFromCookies
       }
     };
-  }]
+  }];
 });
 }).call(this);
 
